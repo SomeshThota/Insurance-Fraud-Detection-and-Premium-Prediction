@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Claim</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Insurance Fraud System</a>
+  </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Submit Insurance Claim</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="card p-4 shadow-sm">
+        <!-- Policy Information -->
+        <div class="mb-3">
+            <label class="form-label">Policy Tenure (days)</label>
+            <input type="number" class="form-control" name="policy_tenure_days" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Premium Amount (₹)</label>
+            <input type="number" class="form-control" name="premium_amount" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Coverage Amount (₹)</label>
+            <input type="number" class="form-control" name="coverage_amount" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Policy Recently Upgraded</label>
+            <select class="form-select" name="policy_recently_upgraded">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Customer History -->
+        <div class="mb-3">
+            <label class="form-label">Customer Age</label>
+            <input type="number" class="form-control" name="customer_age" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Number of Previous Claims</label>
+            <input type="number" class="form-control" name="num_previous_claims" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Prior Fraud Flag</label>
+            <select class="form-select" name="prior_fraud_flag">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Late Premium History</label>
+            <select class="form-select" name="late_premium_history">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Claim Details -->
+        <div class="mb-3">
+            <label class="form-label">Claim Amount (₹)</label>
+            <input type="number" class="form-control" name="claim_amount" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Repair Estimate (₹)</label>
+            <input type="number" class="form-control" name="repair_estimate" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Claim Delay (days)</label>
+            <input type="number" class="form-control" name="claim_delay_days" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Police Report Filed</label>
+            <select class="form-select" name="police_report_filed">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Witness Present</label>
+            <select class="form-select" name="witness_present">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Photos Submitted</label>
+            <select class="form-select" name="photos_submitted">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <!-- Accident Context -->
+        <div class="mb-3">
+            <label class="form-label">Accident Time</label>
+            <select class="form-select" name="accident_time">
+                <option value="0">Day</option>
+                <option value="1">Night</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Accident Type</label>
+            <select class="form-select" name="accident_type">
+                <option value="0">Multi-vehicle</option>
+                <option value="1">Single-vehicle</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Weather Condition</label>
+            <select class="form-select" name="weather_condition">
+                <option value="0">Clear</option>
+                <option value="1">Rain</option>
+                <option value="2">Fog</option>
+            </select>
+        </div>
+
+        <!-- Vehicle Info -->
+        <div class="mb-3">
+            <label class="form-label">Vehicle Age (years)</label>
+            <input type="number" class="form-control" name="vehicle_age" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Vehicle Market Value (₹)</label>
+            <input type="number" class="form-control" name="vehicle_market_value" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Injury Reported</label>
+            <select class="form-select" name="injury_reported">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Submit Claim</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fraud Analytics Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light">
+    <!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Insurance Fraud System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/fraud">Fraud Detection</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/claims">Claims List</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Fraud Analytics Dashboard</h2>
+
+    <div class="row">
+        <!-- Fraud Rate -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Fraud vs Genuine Claims</h5>
+                    <canvas id="fraudRateChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Claim Amount Distribution -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Claim Amount Distribution</h5>
+                    <canvas id="claimAmountChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Accident Type -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Accident Type Breakdown</h5>
+                    <canvas id="accidentTypeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Police Report Filed -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Police Report Filed</h5>
+                    <canvas id="policeReportChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fraud Rate Chart
+    new Chart(document.getElementById("fraudRateChart"), {
+        type: "doughnut",
+        data: {
+            labels: ["Fraud", "Genuine"],
+            datasets: [{
+                data: [{{ fraud_count }}, {{ genuine_count }}],
+                backgroundColor: ["#dc3545", "#28a745"]
+            }]
+        }
+    } );
+
+    // Claim Amount Distribution
+    new Chart(document.getElementById("claimAmountChart"), {
+        type: "bar",
+        data: {
+            labels: {{ claim_bins | safe }},
+            datasets: [{
+                label: "Number of Claims",
+                data: {{ claim_counts | safe }},
+                backgroundColor: "#007bff"
+            }]
+        }
+    });
+
+    // Accident Type Breakdown
+    new Chart(document.getElementById("accidentTypeChart"), {
+        type: "pie",
+        data: {
+            labels: ["Multi-vehicle", "Single-vehicle"],
+            datasets: [{
+                data: [{{ multi_accident_count }}, {{ single_accident_count }}],
+                backgroundColor: ["#ffc107", "#17a2b8"]
+            }]
+        }
+    });
+
+    // Police Report Filed
+    new Chart(document.getElementById("policeReportChart"), {
+        type: "pie",
+        data: {
+            labels: ["Report Filed", "No Report"],
+            datasets: [{
+                data: [{{ police_yes_count }}, {{ police_no_count }}],
+                backgroundColor: ["#28a745", "#dc3545"]
+            }]
+        }
+    });
+</script>
+</body>
+</html>
