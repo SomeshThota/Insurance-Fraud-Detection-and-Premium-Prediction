@@ -121,7 +121,7 @@ import os
 
 if not os.path.exists("premium_amount_model.pkl"):
     os.system("python generate_premium_dataset.py")
-    os.system("python train_premiummodel.py")
+    os.system("python train_premium_model.py")
 
 if not os.path.exists("fraud_model.pkl"):
     os.system("python generate_fraud_dataset.py")
