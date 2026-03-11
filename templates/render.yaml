@@ -2,5 +2,5 @@ services:
   - type: web
     name: insurance-fraud-app
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && python generate_fraud_dataset.py && python generate_premium_dataset.py && python fraud_model.py && python train_premiummodel.py
     startCommand: python app.py
