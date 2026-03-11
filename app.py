@@ -116,10 +116,20 @@ def admin_required(view_func):
 # ---------------------------
 # Load trained models
 # ---------------------------
+# ✅ Fix - train if models don't exist
+import os
+
+if not os.path.exists("premium_amount_model.pkl"):
+    os.system("python generate_premium_dataset.py")
+    os.system("python train_premiummodel.py")
+
+if not os.path.exists("fraud_model.pkl"):
+    os.system("python generate_fraud_dataset.py")
+    os.system("python fraud_model.py")
+
 premium_amount_model = joblib.load("premium_amount_model.pkl")
 premium_plan_model = joblib.load("premium_plan_model.pkl")
 fraud_model = joblib.load("fraud_model.pkl")
-
 # ---------------------------
 # Home & Auth Routes
 # ---------------------------
