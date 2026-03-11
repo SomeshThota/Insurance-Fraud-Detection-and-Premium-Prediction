@@ -203,16 +203,17 @@ def logout():
 
 @app.route("/premium_login")
 def premium_login():
-    # If not logged in, send user to login first, then to premium
     if "user_id" not in session:
-        return redirect(url_for("login", next=url_for("premium")))
+        return redirect(url_for("login", next="/premium"))
     return redirect(url_for("premium"))
 
 
 @app.route("/admin_login")
 def admin_login():
-    # Redirect to login page for admins/agents
-    return redirect(url_for("login", next=url_for("fraud")))
+    if "user_id" not in session or session.get("role") != "admin":
+        flash("Admin login required.", "warning")
+        return redirect(url_for("login", next="/fraud"))
+    return redirect(url_for("fraud"))
 
 # ---------------------------
 # Premium Amount Prediction
