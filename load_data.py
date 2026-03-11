@@ -1,11 +1,36 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+import joblib
 
-# Load fraud dataset
-fraud_data = pd.read_csv("fraud_oracle.csv")   # replace with the actual fraud file name
-print("Fraud dataset shape:", fraud_data.shape)
-print(fraud_data.head())
+df = pd.read_csv("synthetic_insurance_dataset.csv")
 
-# Load premium dataset (train.csv is usually the main one)
-premium_data = pd.read_csv("aug_train.csv")   # replace with the actual premium file name
-print("Premium dataset shape:", premium_data.shape)
-print(premium_data.head())
+# Premium Amount Model
+X_reg = df[["Age", "VehiclePrice", "VehicleAge", "PastClaims", "DrivingExperience"]]
+y_reg = df["Premium"]
+
+X_train, X_test, y_train, y_test = train_test_split(X_reg, y_reg, test_size=0.2, random_state=42)
+
+reg_model = RandomForestRegressor(
+    n_estimators=20,   # ✏️ was 200 → now 20
+    max_depth=8,       # ✏️ added
+    random_state=42
+)
+reg_model.fit(X_train, y_train)
+joblib.dump(reg_model, "premium_amount_model.pkl", compress=3)  # ✏️ added compress
+print("✅ Premium amount model saved")
+
+# Plan Type Model
+X_clf = df[["Age", "VehiclePrice", "VehicleAge", "PastClaims", "DrivingExperience"]]
+y_clf = df["PlanType"]
+
+X_train, X_test, y_train, y_test = train_test_split(X_clf, y_clf, test_size=0.2, random_state=42)
+
+clf_model = RandomForestClassifier(
+    n_estimators=20,   # ✏️ was 200 → now 20
+    max_depth=8,       # ✏️ added
+    random_state=42
+)
+clf_model.fit(X_train, y_train)
+joblib.dump(clf_model, "premium_plan_model.pkl", compress=3)  # ✏️ added compress
+print("✅ Premium plan model saved")
